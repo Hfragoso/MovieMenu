@@ -2,7 +2,6 @@ package com.example.moviemenu.view;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         Picasso.get().load(posterUrl)
                 .placeholder(R.mipmap.ic_launcher)
                 .centerCrop()
-                .resize(300,500)
+                .resize(300, 500)
                 .into(moviesViewHolder.posterIV);
     }
 
