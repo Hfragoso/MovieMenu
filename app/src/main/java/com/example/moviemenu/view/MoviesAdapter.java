@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.moviemenu.R;
 import com.example.moviemenu.model.entity.MovieList;
+import com.squareup.picasso.Picasso;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
@@ -31,6 +32,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         String genre = movieList.getData().get(position).getGenre();
         String posterUrl = movieList.getData().get(position).getPoster();
         moviesViewHolder.genreTV.setText(genre);
+        Picasso.get().load(posterUrl)
+                .placeholder(R.mipmap.ic_launcher)
+                .centerCrop()
+                .resize(300, 500)
+                .into(moviesViewHolder.posterIV);
     }
 
     @Override
