@@ -3,6 +3,8 @@ package com.example.moviemenu.view;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -11,6 +13,7 @@ import com.example.moviemenu.di.AppComponent;
 import com.example.moviemenu.di.AppModule;
 import com.example.moviemenu.di.DaggerAppComponent;
 import com.example.moviemenu.di.UtilsModule;
+import com.example.moviemenu.model.entity.MovieList;
 import com.example.moviemenu.model.utils.ApiResponse;
 import com.example.moviemenu.model.utils.ViewModelFactory;
 import com.example.moviemenu.viewModel.MovieDataViewModel;
@@ -28,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.fetch_movies_btn)
     Button btnFetchMovies;
+
+    @BindView(R.id.movies_recycler_view)
+    RecyclerView moviesRecyclerView;
 
     MovieDataViewModel movieDataViewModel;
 
@@ -57,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case SUCCESS:
+                displayMovies(apiResponse.data);
                 Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -72,5 +79,10 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.fetch_movies_btn)
     void onFetchButtonClicked() {
         movieDataViewModel.getMovies();
+    }
+
+    private void displayMovies(MovieList data) {
+        moviesRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        moviesRecyclerView.setAdapter(new MoviesAdapter(data));
     }
 }
