@@ -8,14 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.example.moviemenu.R;
 import com.example.moviemenu.model.entity.MovieList;
-
-import java.net.URI;
-
-import butterknife.BindView;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
@@ -37,7 +31,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         String genre = movieList.getData().get(position).getGenre();
         String posterUrl = movieList.getData().get(position).getPoster();
         moviesViewHolder.genreTV.setText(genre);
-        moviesViewHolder.glideRequestManager.load(posterUrl).into(moviesViewHolder.posterIV);
     }
 
     @Override
@@ -49,14 +42,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
         TextView genreTV;
         ImageView posterIV;
-        RequestManager glideRequestManager;
 
 
         public MoviesViewHolder(@NonNull View itemView) {
             super(itemView);
             genreTV = itemView.findViewById(R.id.tv_genre);
             posterIV = itemView.findViewById(R.id.iv_poster);
-            glideRequestManager = Glide.with(itemView);
         }
     }
 }
