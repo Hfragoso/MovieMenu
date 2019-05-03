@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.moviemenu.R;
 import com.example.moviemenu.model.entity.MovieList;
+import com.squareup.picasso.Picasso;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
@@ -29,8 +30,19 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     @Override
     public void onBindViewHolder(@NonNull MoviesViewHolder moviesViewHolder, int position) {
         String genre = movieList.getData().get(position).getGenre();
+        String year = movieList.getData().get(position).getYear();
+        String title = movieList.getData().get(position).getTitle();
         String posterUrl = movieList.getData().get(position).getPoster();
+
         moviesViewHolder.genreTV.setText(genre);
+        moviesViewHolder.yearTV.setText(year);
+        moviesViewHolder.titleTV.setText(title);
+
+        Picasso.get().load(posterUrl)
+                .placeholder(R.mipmap.ic_launcher)
+                .centerCrop()
+                .resize(300, 500)
+                .into(moviesViewHolder.posterIV);
     }
 
     @Override
@@ -41,12 +53,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     public class MoviesViewHolder extends RecyclerView.ViewHolder {
 
         TextView genreTV;
+        TextView yearTV;
+        TextView titleTV;
         ImageView posterIV;
 
 
         public MoviesViewHolder(@NonNull View itemView) {
             super(itemView);
             genreTV = itemView.findViewById(R.id.tv_genre);
+            yearTV = itemView.findViewById(R.id.tv_year);
+            titleTV = itemView.findViewById(R.id.tv_title);
             posterIV = itemView.findViewById(R.id.iv_poster);
         }
     }
