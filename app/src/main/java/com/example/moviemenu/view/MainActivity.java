@@ -1,6 +1,8 @@
 package com.example.moviemenu.view;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +16,7 @@ import com.example.moviemenu.R;
 import com.example.moviemenu.di.AppComponent;
 import com.example.moviemenu.di.AppModule;
 import com.example.moviemenu.di.DaggerAppComponent;
+import com.example.moviemenu.di.RoomModule;
 import com.example.moviemenu.di.UtilsModule;
 import com.example.moviemenu.model.entity.MovieList;
 import com.example.moviemenu.model.utils.ApiResponse;
@@ -47,13 +50,15 @@ public class MainActivity extends AppCompatActivity {
 
         AppComponent appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
+                .roomModule(new RoomModule(this))
                 .utilsModule(new UtilsModule())
                 .build();
         appComponent.doInjection(this);
 
         movieDataViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieDataViewModel.class);
         movieDataViewModel.getMoviesResponse().observe(this, this::consumeResponse);
-        movieDataViewModel.getMovies();
+        SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+        movieDataViewModel.getMovies(sharedPreferences);
 
         setUpSearchView();
     }
@@ -69,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
             case SUCCESS:
                 displayMovies(apiResponse.data);
-                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 break;
 
             case ERROR:

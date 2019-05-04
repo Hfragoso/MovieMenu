@@ -3,6 +3,7 @@ package com.example.moviemenu.di;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.example.moviemenu.model.Repository;
+import com.example.moviemenu.model.room.MovieDatabase;
 import com.example.moviemenu.model.utils.ApiCallInterface;
 import com.example.moviemenu.model.utils.EndPoints;
 import com.example.moviemenu.model.utils.ViewModelFactory;
@@ -70,8 +71,8 @@ public class UtilsModule {
 
     @Provides
     @Singleton
-    Repository getRepository(ApiCallInterface apiCallInterface) {
-        return new Repository(apiCallInterface);
+    Repository getRepository(ApiCallInterface apiCallInterface, MovieDatabase movieDatabase) {
+        return new Repository(apiCallInterface, movieDatabase);
     }
 
     @Provides
