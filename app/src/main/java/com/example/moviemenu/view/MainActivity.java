@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
         movieDataViewModel.getMoviesResponse().observe(this, this::consumeResponse);
         SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
         movieDataViewModel.getMovies(sharedPreferences);
-
-        setUpSearchView();
     }
 
 
@@ -74,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
             case SUCCESS:
                 displayMovies(apiResponse.data);
+                setUpSearchView();
                 break;
 
             case ERROR:
@@ -91,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpSearchView() {
+        searchEditText.setText("");
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {

@@ -47,7 +47,7 @@ public class MovieDataViewModel extends ViewModel {
     public Boolean insertDB(MovieList movieList) {
         repository.insertCache(movieList);
 
-        return true;
+        return repository.refreshDB;
     }
 
     @Override
